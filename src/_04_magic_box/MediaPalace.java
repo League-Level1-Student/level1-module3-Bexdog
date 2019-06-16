@@ -72,6 +72,7 @@ public class MediaPalace {
 	public void playMusicOnComputer(String fileName) {
 		File fileToPlay = new File(fileName);
 		try {
+			
 			java.awt.Desktop.getDesktop().open(fileToPlay);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -96,7 +97,7 @@ public class MediaPalace {
 		}
 	}
 
-	void speak(String words) {
+	public void speak(String words) {
 		try {
 			Runtime.getRuntime().exec("say " + words).waitFor();
 		} catch (Exception e) {

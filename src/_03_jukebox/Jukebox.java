@@ -5,6 +5,8 @@ package _03_jukebox;
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -12,7 +14,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -20,10 +25,23 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /*   If you don't have javazoom.jar in your project, you can download it from here: http://bit.ly/javazoom
  *   Right click your project and add it as a JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
-
+public class Jukebox implements Runnable, ActionListener {
+	JButton organ = new JButton();
+	JButton gong = new JButton();
+	Song song1 = new Song("organ.wav");
+	Song song2 = new Song("gong.wav");
     public void run() {
-
+    	JFrame frame = new JFrame();
+    	JPanel panel = new JPanel();
+    	frame.add(panel);
+    	organ.addActionListener(this);
+    	gong.addActionListener(this);
+    	organ.setText("Organ Sound");
+    	gong.setText("Gong Sound");
+    	panel.add(organ);
+    	panel.add(gong);
+    	frame.setVisible(true);
+    	frame.pack();
 		// 1. Find an mp3 on your computer or on the Internet.
 		// 2. Create a Song object for that mp3
 
@@ -44,6 +62,18 @@ public class Jukebox implements Runnable {
 		URL imageURL = getClass().getResource(fileName);
 		Icon icon = new ImageIcon(imageURL);
 		return new JLabel(icon);
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton test = (JButton) e.getSource();
+		if(test==gong) {
+			song1.play();
+		}
+		else {
+			song2.play();
+		}
 	}
 
 }

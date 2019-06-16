@@ -7,6 +7,8 @@ package _04_magic_box;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -14,12 +16,13 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class MagicBox extends JPanel implements Runnable, MouseListener {
-
+public class MagicBox extends JPanel implements Runnable, MouseListener  {
+	MediaPalace music = new MediaPalace();
 	/*
 	 * We are going to hide secrets within the magic box. 
 	 * When the user clicks on a secret place, stuff will happen.
@@ -48,16 +51,20 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	}
 
 	private void createUI() {
+		
+			
 		JFrame frame = new JFrame("The Magic Box contains many secrets...");
 		frame.add(this);
+		
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.addMouseListener(this);
 	}
 
 	private void loadBackgroundImage() throws Exception {
-		String imageFile = "src/magic_box/magic-box.jpg";
+		String imageFile = "src/_04_magic_box/magic-box.jpg";
 		try {
 			backgroundImage = ImageIO.read(new File(imageFile));
 		} catch (IOException e) {
@@ -72,7 +79,7 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		music.playMusicOnComputer("src/_04_magic_box/gong.wav");
 		
 	}
 
@@ -99,6 +106,11 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
+
+	
 
 }
 
