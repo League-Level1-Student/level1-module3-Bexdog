@@ -10,22 +10,35 @@ int rcarY=375;
 int rcarYi=1;
 int lcarSpeed=8;
 int rcarSpeed=9;
-int frogY=510;
-int frogX=400;
+int frogY=535;
+int frogX=425;
+int carW;
+int carH;
+boolean debug = false;
 void setup(){
   size(844,600);
   background=loadImage("froggerBackground.png");
   frog = loadImage("frog.png");
-  frog.resize(110,110);
+  frog.resize(60,60);
   carLeft=loadImage("lcar.png");
-  carLeft.resize(150,60);
+  carLeft.resize(160,60);
   carRight=loadImage("rcar.png");
-  carRight.resize(150,60);
+  carRight.resize(160,60);
+  carH = carLeft.height;
+  carW = carLeft.width-20;
 }
 void draw(){
   background(background);
+  if(debug){
+  rect(lcarX,lcarY,150,60);
+  rect(frogX,frogY,frog.height,frog.width);
+  }
   image(frog,frogX,frogY);
+  
   image(carLeft,lcarX,lcarY);
+  if(debug){
+   rect(rcarX,rcarY,150,60);
+  }
   image(carRight,rcarX,rcarY);
 if((frogX+frog.width/2)<=0){
   frogX=15;
@@ -66,19 +79,23 @@ if(rcarX>=850){
       rcarY=375;
     } 
 }
-if(frogY==48){
+if(frogY==73){
   System.out.println("You Win");
   stop();
 }
-if (((frogY > lcarY) && (frogY < lcarY+carLeft.height) && (frogX > lcarX) && (frogX < lcarX+carLeft.width))||
-   ((frogY > rcarY) && (frogY < rcarY+carRight.height) && (frogX > rcarX) && (frogX < rcarX+carRight.width)))
+if ((abs(frogY - lcarY)<carH && /*(abs(frogY+frog.height-lcarY-carH) < carH) &&*/ abs(frogX +frog.width-lcarX-carW)<carW && (frogX < lcarX+carW))||
+   (abs(frogY - rcarY)<carH && /*(abs(frogY+frog.height-rcarY-carH) < carH) &&*/ abs(frogX +frog.width-rcarX-carW)<carW && (frogX < rcarX+carW)))
       {
-             stop();
+        System.out.println("You lose");    
+        stop();
       }
       else 
       {
-             System.out.println(frogY+" "+lcarY+ " "+ rcarY);
+        if(debug){
+             System.out.println(frogY+" "+lcarY+ " "+ rcarY + " "+carLeft.width+" "+ carLeft.height);
+        }
       }
+
 }
       
 
